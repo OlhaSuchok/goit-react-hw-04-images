@@ -27,7 +27,7 @@ export default function ImageGallery({ imageNameValue, onLoadMore, page }) {
     if (imageNameValue) {
       FetchPosts();
     }
-  }, [imageNameValue, page]);
+  }, [imageNameValue, page, FetchPosts]);
 
   const FetchPosts = async () => {
     setStatus(Status.PENDING);
