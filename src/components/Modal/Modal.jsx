@@ -5,6 +5,12 @@ import { ModalWrapper, Overlay } from './Modal.styled';
 const modalRoot = document.getElementById('modal-root');
 
 export default function Modal({ largeImage, tag, onOpenModal }) {
+  const onEscapeClick = event => {
+    if (event.code === 'Escape') {
+      onOpenModal();
+    }
+  };
+
   useEffect(() => {
     window.addEventListener('keydown', onEscapeClick);
 
@@ -12,12 +18,6 @@ export default function Modal({ largeImage, tag, onOpenModal }) {
       window.removeEventListener('keydown', onEscapeClick);
     };
   }, [onOpenModal, onEscapeClick]);
-
-  const onEscapeClick = event => {
-    if (event.code === 'Escape') {
-      onOpenModal();
-    }
-  };
 
   const onBackdropClick = event => {
     if (event.currentTarget === event.target) {

@@ -23,12 +23,6 @@ export default function ImageGallery({ imageNameValue, onLoadMore, page }) {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
 
-  useEffect(() => {
-    if (imageNameValue) {
-      FetchPosts();
-    }
-  }, [imageNameValue, page, FetchPosts]);
-
   const FetchPosts = async () => {
     setStatus(Status.PENDING);
     try {
@@ -43,6 +37,12 @@ export default function ImageGallery({ imageNameValue, onLoadMore, page }) {
       setError(error);
     }
   };
+
+  useEffect(() => {
+    if (imageNameValue) {
+      FetchPosts();
+    }
+  }, [imageNameValue, page, FetchPosts]);
 
   useEffect(() => {
     setImages([]);
