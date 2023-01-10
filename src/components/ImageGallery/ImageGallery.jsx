@@ -42,7 +42,7 @@ export default function ImageGallery({ imageNameValue, onLoadMore, page }) {
     if (imageNameValue) {
       FetchPosts();
     }
-  }, [imageNameValue, page]);
+  }, [imageNameValue, page, FetchPosts]);
 
   useEffect(() => {
     setImages([]);
