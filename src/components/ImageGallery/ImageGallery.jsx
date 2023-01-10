@@ -23,50 +23,26 @@ export default function ImageGallery({ imageNameValue, onLoadMore, page }) {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
 
-  // const componentDidUpdate = async (prevProps, prevState) => {
-  //   const prevName = prevProps.imageNameValue;
-  //   const prevPage = prevProps.page;
+  useEffect(() => {
+    if (imageNameValue) {
+      FetchPosts();
+    }
+  }, [imageNameValue, page]);
 
-  //   if (prevName !== imageNameValue) {
-  //     setImages([]);
-  //   }
+  const FetchPosts = async () => {
+    setStatus(Status.PENDING);
+    try {
+      const {
+        data: { hits },
+      } = await imagesApi(imageNameValue, page);
 
-  //   if (prevName !== imageNameValue || prevPage !== page) {
-  //     setStatus(Status.PENDING);
-
-  //     try {
-  //       const {
-  //         data: { hits },
-  //       } = await imagesApi(imageNameValue, page);
-  //       console.log(hits);
-
-  //       setImages(prevState => [...prevState, ...hits]);
-  //       setStatus(Status.RESOLVED);
-  //     } catch (error) {
-  //       setStatus(Status.REJECTED);
-  //       setError(Status.REJECTED);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  console.log('Привіт');
-  console.log(images);
-
-  setStatus(Status.PENDING);
-  try {
-    const {
-      data: { hits },
-    } = imagesApi(imageNameValue, page);
-    console.log(hits);
-
-    setImages(prevState => [...prevState, ...hits]);
-    setStatus(Status.RESOLVED);
-  } catch (error) {
-    setStatus(Status.REJECTED);
-    setError(Status.REJECTED);
-  }
-  // }, [imageNameValue, page]);
+      setImages(prev => [...prev, ...hits]);
+      setStatus(Status.RESOLVED);
+    } catch (error) {
+      setStatus(Status.REJECTED);
+      setError(error);
+    }
+  };
 
   useEffect(() => {
     setImages([]);
@@ -76,6 +52,7 @@ export default function ImageGallery({ imageNameValue, onLoadMore, page }) {
     if (showModal) {
       setShowModal(!showModal);
     }
+
     if (event.target.nodeName !== 'IMG') {
       return;
     }
@@ -94,7 +71,6 @@ export default function ImageGallery({ imageNameValue, onLoadMore, page }) {
   if (status === Status.REJECTED) {
     return <RejectedMessage message={error.message} />;
   }
-  console.log(images);
 
   return (
     <>

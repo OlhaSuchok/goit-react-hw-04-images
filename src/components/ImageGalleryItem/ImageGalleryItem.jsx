@@ -8,7 +8,6 @@ import {
 import { Gallery } from '../ImageGallery/ImageGallery.styled';
 
 export default function ImageGalleryItem({ images, onClick }) {
-  console.log(images);
   return (
     <Gallery>
       {images.map(({ id, webformatURL, largeImageURL, tags }) => {
