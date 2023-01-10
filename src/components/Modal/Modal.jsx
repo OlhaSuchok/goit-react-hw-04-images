@@ -17,7 +17,7 @@ export default function Modal({ largeImage, tag, onOpenModal }) {
     return () => {
       window.removeEventListener('keydown', onEscapeClick);
     };
-  }, [onOpenModal, onEscapeClick]);
+  }, [onOpenModal, useCallback(onEscapeClick)]);
 
   const onBackdropClick = event => {
     if (event.currentTarget === event.target) {
