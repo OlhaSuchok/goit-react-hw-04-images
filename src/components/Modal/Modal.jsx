@@ -17,7 +17,8 @@ export default function Modal({ largeImage, tag, onOpenModal }) {
     return () => {
       window.removeEventListener('keydown', onEscapeClick);
     };
-  }, [onOpenModal, onEscapeClick]);
+    // eslint-disable-next-line
+  }, [onOpenModal]);
 
   const onBackdropClick = event => {
     if (event.currentTarget === event.target) {
