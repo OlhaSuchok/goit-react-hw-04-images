@@ -1,43 +1,37 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Box } from 'components/Box/Box';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 
-class App extends Component {
-  state = {
-    imageNameValue: '',
-    page: 1,
+export default function ImageFinger() {
+  const [imageNameValue, setImageNameValue] = useState('');
+  const [page, setPage] = useState('');
+
+  const handleFormSearchSubmit = imageNameValue => {
+    setImageNameValue(imageNameValue);
   };
 
-  handleFormSearchSubmit = imageNameValue => {
-    this.setState({ imageNameValue });
+  const onLoadMore = () => {
+    setPage(prevState => prevState + 1);
   };
 
-  onLoadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
+  const onResetPage = () => {
+    setPage(1);
   };
 
-  onResetPage = () => {
-    this.setState({ page: 1 });
-  };
-
-  render() {
-    return (
-      <Box p={20}>
-        <Searchbar
-          onFormSearchSubmit={this.handleFormSearchSubmit}
-          onResetPage={this.onResetPage}
-        />
-        <ImageGallery
-          imageNameValue={this.state.imageNameValue}
-          onLoadMore={this.onLoadMore}
-          page={this.state.page}
-        />
-        <ToastContainer autoClose={3000} />
-      </Box>
-    );
-  }
+  return (
+    <Box p={20}>
+      <Searchbar
+        onFormSearchSubmit={handleFormSearchSubmit}
+        onResetPage={onResetPage}
+      />
+      <ImageGallery
+        imageNameValue={imageNameValue}
+        onLoadMore={onLoadMore}
+        page={page}
+      />
+      <ToastContainer autoClose={3000} />
+    </Box>
+  );
 }
-
-export default App;
